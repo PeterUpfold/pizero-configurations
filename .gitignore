@@ -1,0 +1,5 @@
+server.pem
+*.swp
+.DS_Store
+postfix_sasl
+volatile/
