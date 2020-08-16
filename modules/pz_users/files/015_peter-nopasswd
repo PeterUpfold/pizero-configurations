@@ -1,0 +1,2 @@
+# Replicates the default 010_pi-nopasswd rule, but for our user
+peter ALL=(ALL) NOPASSWD: ALL
