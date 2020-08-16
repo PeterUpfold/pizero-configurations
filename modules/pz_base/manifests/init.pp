@@ -1,6 +1,6 @@
 # Base software packages and common configurations to all system roles
 class pz_base {
-  $base_packages = [ 'build-essential', 'curl', 'wget', 'screen', 'tmux', 'unattended-upgrades', 'git', 'logrotate', 'rsync', 'vim' ]  
+  $base_packages = [ 'build-essential', 'curl', 'wget', 'screen', 'tmux', 'unattended-upgrades', 'git', 'logrotate', 'rsync', 'vim' ]
 
   package { $base_packages:
     ensure => latest

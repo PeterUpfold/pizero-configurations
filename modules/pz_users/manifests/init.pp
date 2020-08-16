@@ -39,7 +39,6 @@ class pz_users {
     mode   => '0600',
     source => ('puppet:///modules/pz_users/peter.authorized_keys')
   }
- 
   file { '/etc/sudoers.d/015_peter-nopasswd':
     ensure => file,
     owner  => 'root',
