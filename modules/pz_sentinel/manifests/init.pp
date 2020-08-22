@@ -18,7 +18,7 @@ class pz_sentinel {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => Serivce['rsyslog']
+    require => Service['rsyslog']
   }
 
   group { 'sentinel':
