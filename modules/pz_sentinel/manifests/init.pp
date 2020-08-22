@@ -18,7 +18,15 @@ class pz_sentinel {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => Service['rsyslog']
+    require => Service['rsyslog'],
+    source  => ('puppet:///modules/pz_sentinel/rsyslog.conf')
+  }
+
+  file { '/var/log/remote':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'adm',
+    mode   => '0770',
   }
 
   group { 'sentinel':
@@ -47,5 +55,20 @@ class pz_sentinel {
     group  => 'sentinel',
   }
 
+  file { '/home/sentinel/.ssh/id_rsa':
+    ensure => file,
+    mode   => '0600',
+    owner  => 'sentinel',
+    group  => 'sentinel',
+    source => ('puppet:///modules/pz_sentinel/volatile/sentinel_key')
+  }
+
+  file { '/home/sentinel/.ssh/id_rsa.pub':
+    ensure => file,
+    mode   => '0600',
+    owner  => 'sentinel',
+    group  => 'sentinel',
+    source => ('puppet:///modules/pz_sentinel/sentinel_key.pub')
+  }
 
 }
