@@ -21,4 +21,31 @@ class pz_sentinel {
     require => Serivce['rsyslog']
   }
 
+  group { 'sentinel':
+    ensure => present,
+    gid    => '1002'
+  }
+
+  user { 'sentinel':
+    ensure     => present,
+    uid        => '1002',
+    groups     => [ 'sentinel' ],
+    membership => 'minimum'
+  }
+
+  file { '/home/sentinel':
+    ensure => directory,
+    mode   => '0700',
+    owner  => 'sentinel',
+    group  => 'sentinel',
+  }
+
+  file { '/home/sentinel/.ssh':
+    ensure => directory,
+    mode   => '0700',
+    owner  => 'sentinel',
+    group  => 'sentinel',
+  }
+
+
 }

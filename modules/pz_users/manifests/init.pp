@@ -1,4 +1,5 @@
-# Configure user accounts for Pi Zero systems.
+# Configure user accounts for Pi Zero systems. These are common user
+# accounts. Role-specific accounts will be in the role specific module.
 class pz_users {
 
   user { 'pi':
