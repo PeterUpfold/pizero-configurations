@@ -14,4 +14,20 @@ class pz_base {
     source => ('puppet:///modules/pz_base/sshd_config')
   }
 
+  # unattended upgrades
+  file { '/etc/apt/apt.conf.d/20auto-upgrades':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['unattended-upgrades'],
+    source  => ('puppet:///modules/pz_base/20auto-upgrades')
+  }
+  file { '/etc/apt/apt.conf.d/50unattended-upgrades':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['unattended-upgrades'],
+    source  => ('puppet:///modules/pz_base/50unattended-upgrades')
+  }
+
 }
