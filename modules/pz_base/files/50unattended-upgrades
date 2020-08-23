@@ -31,10 +31,10 @@ Unattended-Upgrade::Origins-Pattern {
         "origin=Debian,codename=${distro_codename},label=Debian";
         "origin=Debian,codename=${distro_codename},label=Debian-Security";
 
-	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=rpi,b=armhf";
-	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=non-free,b=armhf";
-	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=contrib,b=armhf";
-	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=main,b=armhf";
+	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=rpi";
+	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=non-free";
+	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=contrib";
+	"o=Raspbian,a=stable,n=${distro_codename},l=Raspbian,c=main";
 
         // Archive or Suite based matching:
         // Note that this will silently match a different release after
