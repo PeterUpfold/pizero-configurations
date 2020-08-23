@@ -11,4 +11,13 @@ class pz_dns {
     require => Package['unbound']
   }
 
+  file { '/etc/unbound/unbound.conf.d/cloudflare-dot.conf':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => ('puppet:///modules/pz_dns/cloudflare-dot.conf'),
+    notify => Service['unbound']
+  }
+
 }
