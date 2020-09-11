@@ -43,9 +43,9 @@ class pz_sentinel {
 
   file { '/home/sentinel':
     ensure => directory,
-    mode   => '0700',
+    mode   => '0750',
     owner  => 'sentinel',
-    group  => 'sentinel',
+    group  => 'deploybot',
   }
 
   file { '/home/sentinel/.ssh':
