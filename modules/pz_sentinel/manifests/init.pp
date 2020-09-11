@@ -43,7 +43,7 @@ class pz_sentinel {
 
   file { '/home/sentinel':
     ensure => directory,
-    mode   => '0750',
+    mode   => '0770',
     owner  => 'sentinel',
     group  => 'deploybot',
   }
