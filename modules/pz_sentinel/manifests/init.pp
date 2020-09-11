@@ -78,5 +78,13 @@ class pz_sentinel {
     user     => 'deploybot',
     require  => File['/home/deploybot/.ssh/id_ecdsa']
   }
+  
+  file { '/etc/cron.d/sentinel':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => ('puppet:///modules/pz_sentinel/sentinel.cron')
+  }
 
 }
