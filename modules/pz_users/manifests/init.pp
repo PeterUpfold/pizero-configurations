@@ -51,12 +51,12 @@ class pz_users {
 
   group { 'deploybot':
     ensure => present,
-    gid    => 1002
+    gid    => 1003
   }
 
   user { 'deploybot':
     ensure     => present,
-    uid        => 1002,
+    uid        => 1003,
     groups     => [ 'deploybot' ],
     membership => minimum,
     home       => '/home/deploybot'

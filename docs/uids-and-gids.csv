@@ -3,3 +3,5 @@ uid,1001,peter,Interactive user account
 gid,1001,peter,Group for interactive user account
 uid,1002,sentinel,Sentinel role for monitoring semi-trusted systems
 gid,1002,sentinel,Sentinel role for monitoring semi-trusted systems
+gid,1003,deploybot,Deploy SSH key
+uid,1003,deploybot,Deploy SSH key
