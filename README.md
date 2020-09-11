@@ -9,4 +9,4 @@ that I use for bespoke home automation/monitoring.
     sudo puppet module install puppetlabs-vcsrepo
     git clone https://github.com/PeterUpfold/pizero-configurations.git
     cd pizero-configurations
-    sudo puppet apply --verbose --modulepath=modules/ [role].pp
+    sudo puppet apply --verbose --modulepath=modules/:/etc/puppet/code/modules/ [role].pp
