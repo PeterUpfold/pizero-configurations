@@ -19,6 +19,7 @@ class pz_users {
     gid    => 1001,
   }
 
+
   file { '/home/peter':
     ensure => directory,
     owner  => 'peter',
@@ -46,6 +47,49 @@ class pz_users {
     group  => 'root',
     mode   => '0440',
     source => ('puppet:///modules/pz_users/015_peter-nopasswd')
+  }
+
+  group { 'deploybot':
+    ensure => present,
+    gid    => 1002
+  }
+
+  user { 'deploybot':
+    ensure     => present,
+    uid        => 1002,
+    groups     => [ 'deploybot' ],
+    membership => minimum,
+    home       => '/home/deploybot'
+  }
+
+  file { '/home/deploybot':
+    ensure => directory,
+    owner  => 'deploybot',
+    group  => 'deploybot',
+    mode   => '0700'
+  }
+
+  file { '/home/deploybot/.ssh':
+    ensure => directory,
+    owner  => 'deploybot',
+    group  => 'deploybot',
+    mode   => '0700'
+  }
+
+  file { '/home/deploybot/.ssh/id_ecdsa':
+    ensure => file,
+    owner  => 'deploybot',
+    group  => 'deploybot',
+    mode   => '0600',
+    source => ('puppet:///modules/pz_users/volatile/deploybot_id_ecdsa')
+  }
+
+  file { '/home/deploybot/.ssh/id_ecdsa.pub':
+    ensure => file,
+    owner  => 'deploybot',
+    group  => 'deploybot',
+    mode   => '0600',
+    source => ('puppet:///modules/pz_users/deploybot_id_ecdsa.pub')
   }
 
 }

@@ -71,4 +71,12 @@ class pz_sentinel {
     source => ('puppet:///modules/pz_sentinel/sentinel_key.pub')
   }
 
+  vcsrepo { '/home/sentinel/sentinel':
+    ensure   => latest,
+    provider => git,
+    source   => 'ssh://git@github.com/PeterUpfold/sentinel.git',
+    user     => 'deploybot',
+    require  => File['/home/deploybot/.ssh/id_ecdsa']
+  }
+
 }
