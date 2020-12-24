@@ -17,18 +17,24 @@ if [ -f smokeping.tar.gz ]; then
     rm -f -- smokeping.tar.gz
 fi
 
+if [ -f "${SP_ROOT}/bin/smokeping" ]; then
+    rm -rf -- "${SP_UNPACK_ROOT}"
+    logger --id=$$ "Smokeping already installed"
+    exit 0
+fi
+
 curl -s "${TARBALL}" -o smokeping.tar.gz
 exitcode=$?
 
 if [ $exitcode -ne 0 ]; then
-    echo "Failed to download $TARBALL with $exitcode".
+    logger --id=$$ "Failed to download $TARBALL with $exitcode".
     exit $exitcode
 fi
 
-sum=$(shasum -a 256 smokeping.tar.gz)
+sum=$(shasum -a 256 smokeping.tar.gz | awk '{print $1}')
 
 if [ "$sum" != "$TARBALL_SUM" ]; then
-    echo "SHA256 sum $sum did not match $TARBALL_SUM. Aborting"
+    logger --id=$$ "SHA256 sum $sum did not match $TARBALL_SUM. Aborting"
     exit 1
 fi
 
@@ -42,7 +48,7 @@ cd $VERSION_STRING
 
 exitcode=$?
 if [ $exitcode -ne 0 ]; then
-    echo "Failed to ./configure with $exitcode".
+    logger --id=$$ "Failed to ./configure with $exitcode".
     exit $exitcode
 fi
 
@@ -50,7 +56,7 @@ make install
 
 exitcode=$?
 if [ $exitcode -ne 0 ]; then
-    echo "Failed to make install with $exitcode".
+    logger --id=$$ "Failed to make install with $exitcode".
     exit $exitcode
 fi
 
@@ -59,3 +65,5 @@ cp -Rv $SP_ROOT/htdocs "${WEBSERVER_DIR}"
 
 
 cd "${SP_ROOT}"
+
+rm -rf -- "${SP_UNPACK_ROOT}"

@@ -24,7 +24,8 @@ class pz_smokeping {
   exec { 'bootstrapper':
     command => '/opt/smokeping/pu_bootstrapper.sh',
     require => [File['/opt/smokeping/pu_bootstrapper.sh'],Package[$sp_packages]],
-    returns => 0
+    returns => 0,
+    timeout => 0
   }
 
 }
