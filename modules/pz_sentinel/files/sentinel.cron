@@ -1,3 +1,3 @@
 # m h   dom mon dow user     command
   0 1    *   *   *  sentinel sh -c 'cd /home/sentinel/sentinel && python3 /home/sentinel/sentinel/scheduled_tasks.py'
-
+  */15 * *   *   *  sentinel sh -c 'cd /home/sentinel/sentinel && python3 /home/sentinel/sentinel/push-syslog-to-queue.py'
