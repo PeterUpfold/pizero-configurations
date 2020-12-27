@@ -1,3 +1,3 @@
 # m h   dom mon dow user     command
-  */16 1    *   *   *  sentinel sh -c 'cd /home/sentinel/sentinel && python3 /home/sentinel/sentinel/sentinel-reader.py'
+  */16 *    *   *   *  sentinel sh -c 'cd /home/sentinel/sentinel && python3 /home/sentinel/sentinel/sentinel-reader.py'
   
