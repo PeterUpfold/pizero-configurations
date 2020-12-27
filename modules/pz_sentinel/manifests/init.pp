@@ -25,7 +25,7 @@ class pz_sentinel {
   file { '/var/log/remote':
     ensure => directory,
     owner  => 'root',
-    group  => 'adm',
+    group  => 'sentinel',
     mode   => '0770',
   }
 
@@ -78,7 +78,7 @@ class pz_sentinel {
     user     => 'deploybot',
     require  => File['/home/deploybot/.ssh/id_ecdsa']
   }
-  
+
   file { '/etc/cron.d/sentinel':
     ensure => file,
     owner  => 'root',
