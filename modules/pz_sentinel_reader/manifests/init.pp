@@ -34,4 +34,12 @@ class pz_sentinel_reader {
     source => ('puppet:///modules/pz_sentinel_reader/sentinel_reader.cron')
   }
 
+  file { '/etc/logrotate.d/sentinel_reader':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => ('puppet:///modules/pz_sentinel_reader/sentinel_reader.logrotate')
+  }
+
 }

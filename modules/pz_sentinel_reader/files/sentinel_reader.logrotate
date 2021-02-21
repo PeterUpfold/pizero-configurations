@@ -1,0 +1,9 @@
+/home/sentinel/sentinel/volatile/output.txt {
+    compress
+    monthly
+    rotate 6
+    prerotate
+        pkill -f 'python3 /home/sentinel/sentinel/sentinel-reader.py'
+    endscript
+    su sentinel sentinel
+}
