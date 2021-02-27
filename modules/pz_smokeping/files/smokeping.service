@@ -1,0 +1,14 @@
+[Unit]
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/smokeping/bin/smokeping --nodaemon
+Restart=always
+RestartSec=10
+WorkingDirectory=/opt/smokeping
+User=smokeping
+Group=smokeping
+
+[Install]
+WantedBy=default.target

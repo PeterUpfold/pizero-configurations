@@ -1,0 +1,13 @@
+[Unit]
+After=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/spawn-fcgi -a 127.0.0.1 -p 10007 -P /run/smokeping-fastcgi.pid -u smokeping -- /opt/smokeping/bin/smokeping_cgi
+PIDFile=/run/smokeping-fastcgi.pid
+Restart=always
+RestartSec=10
+WorkingDirectory=/opt/smokeping
+
+[Install]
+WantedBy=default.target

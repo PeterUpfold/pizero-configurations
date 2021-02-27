@@ -1,0 +1,4 @@
+#!/bin/bash
+# Smokeping FastCGI starter
+
+/usr/bin/spawn-fcgi -a 127.0.0.1 -p 10007 -P /run/smokeping-fastcgi.pid -n -u smokeping -- /opt/smokeping/bin/smokeping_cgi
