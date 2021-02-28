@@ -77,7 +77,8 @@ class pz_smokeping {
     command => '/opt/smokeping/sp-install.sh',
     user    => 'smokeping',
     creates => '/opt/smokeping/.sp-install-complete',
-    require => File['/opt/smokeping/sp-install.sh']
+    require => File['/opt/smokeping/sp-install.sh'],
+    timeout => 0
   }
 
   file { '/etc/nginx/sites-available/smokeping':
