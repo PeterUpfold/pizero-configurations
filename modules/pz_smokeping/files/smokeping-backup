@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Backup SmokePing data
+#
+set -e -u -o pipefail
+
+function report_trap()
+{
+    /usr/bin/curl -s --data-urlencode "token=$PUSHOVER_APP_KEY" --data-urlencode "user=$PUSHOVER_USER_KEY" --data-urlencode "message=Failed to complete smokeping-backup on line $1 -- exit code $2" -A "smokeping-backup" --data-urlencode "sound=none" --data-urlencode "priority=-1" https://api.pushover.net/1/messages.json >/dev/null
+}
+
+trap 'report_trap ${LINENO} $? ' ERR
+
+# get the connection string and other variables
+. /etc/smokeping-backup-config
+
+OUTFILE=$(mktemp)
+
+/bin/tar -C /opt/smokeping --same-owner -czpf $OUTFILE data etc
+
+/usr/local/bin/az storage blob upload -f "${OUTFILE}" -c "${CONTAINER}" -n "$(hostname)-smokeping.tar.gz" --no-progress --validate-content >/dev/null
+
+/bin/rm -f -- $OUTFILE

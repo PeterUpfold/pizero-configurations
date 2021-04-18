@@ -156,4 +156,20 @@ class pz_smokeping {
     require => [File['/etc/systemd/system/smokeping.service'],Exec['smokeping-systemd-daemon-reload']]
   }
 
+  # Backup script
+  file { '/etc/cron.daily/smokeping-backup':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => ('puppet:///modules/pz_smokeping/smokeping-backup')
+  }
+  file { '/etc/smokeping-backup-config':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0600',
+    source => ('puppet:///modules/pz_smokeping/volatile/smokeping-backup-config')
+  }
+
 }
