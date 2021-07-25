@@ -74,11 +74,19 @@ class pz_smokeping {
     source => ('puppet:///modules/pz_smokeping/sp-install.sh')
   }
 
+  file { '/opt/smokeping/thirdparty.patch':
+    ensure => file,
+    owner  => 'smokeping',
+    group  => 'smokeping',
+    mode   => '0644',
+    source => ('puppet:///modules/pz_smokeping/thirdparty.patch')
+  }
+
   exec { 'sp-install':
     command => '/opt/smokeping/sp-install.sh',
     user    => 'smokeping',
     creates => '/opt/smokeping/.sp-install-complete',
-    require => File['/opt/smokeping/sp-install.sh'],
+    require => [File['/opt/smokeping/sp-install.sh'],File['/opt/smokeping/thirdparty.patch']],
     timeout => 0
   }
 
