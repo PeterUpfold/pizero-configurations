@@ -30,4 +30,19 @@ class pz_base {
     source  => ('puppet:///modules/pz_base/50unattended-upgrades')
   }
 
+  # connectivity check script
+  file { '/usr/local/bin/connectivity-check':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => ('puppet:///modules/pz_base/connectivity-check.sh')
+  }
+
+  file { '/etc/cron.d/connectivity-check':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => ('puppet:///modules/pz_base/connectivity-check.cron')
+  }
+
 }
