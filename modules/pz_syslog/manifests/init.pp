@@ -1,4 +1,4 @@
-# Remote system syslog for local network
+# Remote system syslog receiver and aggregator for local network
 class pz_syslog {
   package { 'rsyslog':
     ensure => installed
