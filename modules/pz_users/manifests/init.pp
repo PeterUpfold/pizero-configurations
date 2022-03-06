@@ -49,6 +49,14 @@ class pz_users {
     source => ('puppet:///modules/pz_users/015_peter-nopasswd')
   }
 
+  file { '/home/peter/.screenrc':
+    ensure => file,
+    owner  => 'peter',
+    group  => 'peter',
+    mode   => '0600',
+    source => ('puppet:///modules/pz_users/.screenrc')
+  }
+
   group { 'deploybot':
     ensure => present,
     gid    => 1003
