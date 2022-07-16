@@ -6,6 +6,11 @@
 #
 #
 TARGET_HOST='1.1.1.1'
+
+if [ -f "/etc/skip-connectivity-check" ]; then
+    exit 0
+fi
+
 count=$(ping -c 3 $TARGET_HOST | grep -E "icmp_seq=[0-9] ttl" | wc -l)
 if [ $count -eq 0 ]; then
     echo "$(date)" "Target host" $TARGET_HOST "unreachable, Rebooting!" | logger
