@@ -8,7 +8,7 @@ class pz_users {
 
   user { 'peter':
     ensure     => present,
-    uid        => 1001,
+    uid        => 1000, # as of Bullseye, no pi user is created and we will have 1000 for the first user
     groups     => [ 'peter', 'adm', 'sudo' ],
     membership => minimum,
     home       => '/home/peter',
@@ -16,7 +16,7 @@ class pz_users {
 
   group { 'peter':
     ensure => present,
-    gid    => 1001,
+    gid    => 1000, # as of Bullseye, no pi user is created and we will have 1000 for the first user
   }
 
 

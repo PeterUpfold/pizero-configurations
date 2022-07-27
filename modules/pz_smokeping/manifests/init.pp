@@ -1,7 +1,7 @@
 # Smokeping monitoring
 class pz_smokeping {
   $sp_packages = [ 'fping', 'curl', 'dnsutils', 'perl', 'wget', 'spawn-fcgi', 'libfcgi-perl', 'libconfig-grammar-perl',
-  'libdigest-perl-md5-perl', 'rrdtool', 'librrds-perl', 'libnet-ssleay-perl', 'sendmail'  ]
+  'libdigest-perl-md5-perl', 'rrdtool', 'librrds-perl', 'libnet-ssleay-perl', 'sendmail', 'gawk'  ]
 
   package { $sp_packages:
     ensure => installed
