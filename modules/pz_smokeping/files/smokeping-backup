@@ -23,6 +23,6 @@ OUTFILE=$(mktemp)
 /bin/tar -C /opt/smokeping --same-owner -czpf $OUTFILE data etc
 /bin/systemctl start smokeping.service
 
-/usr/local/bin/az storage blob upload -f "${OUTFILE}" -c "${CONTAINER}" -n "$(hostname)-smokeping.tar.gz" --no-progress --validate-content >/dev/null
+/usr/bin/az storage blob upload -f "${OUTFILE}" -c "${CONTAINER}" -n "$(hostname)-smokeping.tar.gz" --no-progress --validate-content >/dev/null
 
 /bin/rm -f -- $OUTFILE

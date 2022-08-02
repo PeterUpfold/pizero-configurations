@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# DB backup
+#
+#
+
+set -e -u # no pipefail so we can do connectivity check
+
+function report_trap()
+{
+    /usr/bin/curl -s --data-urlencode "token=$PUSHOVER_APP_KEY" --data-urlencode "user=$PUSHOVER_USER_KEY" --data-urlencode "message=Failed to complete www-backup on line $1 -- exit code $2" -A "www-backup" --data-urlencode "sound=none" --data-urlencode "priority=-1" https://api.pushover.net/1/messages.json >/dev/null
+    set +e
+    exit $2
+}
+
+trap 'report_trap ${LINENO} $? ' ERR
+
+# get the connection string and other variables
+. /etc/www-db-backup-config
+
+DATE=$(date +%Y-%m-%d-%H_%M_%S)
+
+mysqldump -A --single-transaction --skip-extended-insert > $OUT/${NAME}_$DATE.sql
+gzip /var/backups/${NAME}_$DATE.sql
+
+# connectivity check and maybe wait for connectivity -- we cannot have pipefail for this
+count=0
+while [ $count -ne 3 ]; do
+    count=$(ping -c 3 $CONNECTIVITY_CHECK_HOST | grep -E "icmp_seq=[0-9] ttl" | wc -l)
+    sleep 10s
+done
+
+az storage blob upload -f "$OUT/${NAME}_${DATE}.sql.gz" -c "${CONTAINER}" -n "$(hostname)-mysqldump" --no-progress --validate-content >/dev/null
+
+find $OUT -name "${NAME}*sql.gz" -mtime +$KEEPDAYS -delete
