@@ -1,6 +1,7 @@
 # Email relay server
 class pz_mailrelay {
-  package { 'postfix':
+  $postfix_packages = ['postfix','postfix-pcre']
+  package { $postfix_packages:
     ensure => installed
   }
 
@@ -25,6 +26,15 @@ class pz_mailrelay {
   exec { 'postmap-passwd':
     command => '/usr/sbin/postmap /etc/postfix/sasl/passwd',
     require => File['/etc/postfix/sasl/passwd']
+  }
+
+  file { '/etc/postfix/generic':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => ('puppet:///modules/pz_mailrelay/volatile/generic'),
+    require => Package['postfix']
   }
 
 }

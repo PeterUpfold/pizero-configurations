@@ -1,6 +1,7 @@
 # Base software packages and common configurations to all system roles
 class pz_base {
-  $base_packages = [ 'build-essential', 'curl', 'wget', 'screen', 'tmux', 'unattended-upgrades', 'git', 'logrotate', 'rsync', 'vim' ]
+  $base_packages = [ 'build-essential', 'curl', 'wget', 'screen', 'tmux', 'unattended-upgrades', 'git', 'logrotate', 'rsync', 'vim',
+  'mailutils' ]
 
   package { $base_packages:
     ensure => latest
@@ -43,6 +44,18 @@ class pz_base {
     group  => 'root',
     mode   => '0644',
     source => ('puppet:///modules/pz_base/connectivity-check.cron')
+  }
+
+  # set unattended upgrades email address privately -- simple 'sed' to drop the email address in after the initial file is dropped
+  file { '/usr/local/bin/set-unattended-upgrades-email.sh':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => ('puppet:///modules/pz_base/volatile/set-unattended-upgrades-email.sh')
+  }
+
+  exec { '/usr/local/bin/set-unattended-upgrades-email.sh':
+    require => File['/usr/local/bin/set-unattended-upgrades-email.sh'],
   }
 
 }
