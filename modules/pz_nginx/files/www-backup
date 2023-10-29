@@ -20,15 +20,17 @@ trap 'report_trap ${LINENO} $? ' ERR
 
 DATE=$(date +%Y-%m-%d-%H_%M_%S)
 
-tar --same-owner -C / -cJpf $OUT/${NAME}_${DATE}.tar.xz $SRC
+tar --same-owner -C / -cpf $OUT/${NAME}_${DATE}.tar $SRC
+gpg --batch --encrypt -r $GPG_RECIPIENT $OUT/${NAME}_${DATE}.tar
+rm -f -- $OUT/${NAME}_${DATE}.tar
 
 # connectivity check and maybe wait for connectivity -- we cannot have pipefail for this
 count=0
 while [ $count -ne 3 ]; do
     count=$(ping -c 3 $CONNECTIVITY_CHECK_HOST | grep -E "icmp_seq=[0-9] ttl" | wc -l)
-    sleep 10s
+    sleep 100s
 done
 
-az storage blob upload -f "$OUT/${NAME}_${DATE}.tar.xz" -c "${CONTAINER}" -n "$(hostname)-varwww" --no-progress --validate-content >/dev/null
+az storage blob upload -f "$OUT/${NAME}_${DATE}.tar.gpg" -c "${CONTAINER}" -n "$(hostname)-varwww" --no-progress --validate-content >/dev/null
 
-find $OUT -name "${NAME}*tar.xz" -mtime +$KEEPDAYS -delete
+find $OUT -name "${NAME}*tar.*" -mtime +$KEEPDAYS -delete

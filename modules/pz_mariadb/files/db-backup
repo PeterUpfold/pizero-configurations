@@ -28,9 +28,10 @@ gpg --batch --encrypt -r $GPG_RECIPIENT $OUT/${NAME}_$DATE.sql
 count=0
 while [ $count -ne 3 ]; do
     count=$(ping -c 3 $CONNECTIVITY_CHECK_HOST | grep -E "icmp_seq=[0-9] ttl" | wc -l)
-    sleep 10s
+    sleep 100s
 done
 
 az storage blob upload -f "$OUT/${NAME}_${DATE}.sql.gpg" -c "${CONTAINER}" -n "$(hostname)-mysqldump" --no-progress --validate-content >/dev/null
+rm -f -- $OUT/${NAME}_$DATE.sql
 
 find $OUT -name "${NAME}*sql.g*" -mtime +$KEEPDAYS -delete

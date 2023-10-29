@@ -1,0 +1,3 @@
+Defaults !requiretty
+
+zabbix ALL=(ALL) NOPASSWD: /home/peter/build/simple-temp-queue-pusher/simple-temp-readout
