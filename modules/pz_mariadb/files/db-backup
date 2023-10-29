@@ -21,7 +21,8 @@ trap 'report_trap ${LINENO} $? ' ERR
 DATE=$(date +%Y-%m-%d-%H_%M_%S)
 
 mysqldump -A --single-transaction --skip-extended-insert > $OUT/${NAME}_$DATE.sql
-gzip /var/backups/${NAME}_$DATE.sql
+#gzip /var/backups/${NAME}_$DATE.sql
+gpg --batch --encrypt -r $GPG_RECIPIENT $OUT/${NAME}_$DATE.sql
 
 # connectivity check and maybe wait for connectivity -- we cannot have pipefail for this
 count=0
@@ -30,6 +31,6 @@ while [ $count -ne 3 ]; do
     sleep 10s
 done
 
-az storage blob upload -f "$OUT/${NAME}_${DATE}.sql.gz" -c "${CONTAINER}" -n "$(hostname)-mysqldump" --no-progress --validate-content >/dev/null
+az storage blob upload -f "$OUT/${NAME}_${DATE}.sql.gpg" -c "${CONTAINER}" -n "$(hostname)-mysqldump" --no-progress --validate-content >/dev/null
 
-find $OUT -name "${NAME}*sql.gz" -mtime +$KEEPDAYS -delete
+find $OUT -name "${NAME}*sql.g*" -mtime +$KEEPDAYS -delete
